@@ -1,16 +1,16 @@
-./__MACOSX/
-./.vscode/
-./chromedriver/
-./jobconnect_ignore/
-./data
+__MACOSX/
+.vscode/
+chromedriver/
+jobconnect_ignore/
+data/
 
-./jobconnect/board/__pycache__
-./jobconnect/board/migrations/__pycache__
+jobconnect/board/__pycache__
+jobconnect/board/migrations/__pycache__
 
-./jobconnect/jobconnect/__pycache__
-./jobconnect/jobconnect/migrations/__pycache__
+jobconnect/jobconnect/__pycache__
+jobconnect/jobconnect/migrations/__pycache__
 
-./jobconnect/user/__pycache__
-./jobconnect/user/migrations/__pycache__
-./jobconnect/etc/
-./jobconnect/company/
+jobconnect/user/__pycache__
+jobconnect/user/migrations/__pycache__
+jobconnect/etc/
+jobconnect/company/
