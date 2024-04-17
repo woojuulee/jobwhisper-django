@@ -1,0 +1,153 @@
+{% extends './base.html' %}
+{% block main %}
+<style>
+.button{
+  display:plex;
+  margin-top : 20px;
+  margin-bottom : 20px;
+  text-align : right;
+}
+</style>
+
+<body>
+  
+
+
+  <div class="item-wrap">
+    <!-- 기업 설명 -->
+    <div class="image-container" style="padding-top:100px">
+      <div class="image-group">
+        <img src="{{board.logo}}" class="bd-placeholder-img card-img-top" width="px" height="200px" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
+        <h2>{{ board.name }}</h2>
+      </div>
+      <div class="col">
+        <div class="row row-cols-1 row-cols-sm-2 g-4">
+          <div class="col d-flex flex-column gap-2">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+              <svg class="bi" width="1em" height="1em">
+                <use xlink:href="#collection"></use>
+              </svg>
+            </div>
+            <h4 class="fw-semibold mb-0 text-body-emphasis">{{board.location}}</h4>
+            <p class="text-body-secondary"></p>
+          </div>
+    
+          <div class="col d-flex flex-column gap-2">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+              <svg class="bi" width="1em" height="1em">
+                <use xlink:href="#gear-fill"></use>
+              </svg>
+            </div>
+            <h4 class="fw-semibold mb-0 text-body-emphasis">홈페이지 주소</h4>
+            <p class="text-body-secondary">{{board.link}}</p>
+          </div>
+    
+          <div class="col d-flex flex-column gap-2">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+              <svg class="bi" width="1em" height="1em">
+                <use xlink:href="#speedometer"></use>
+              </svg>
+            </div>
+            <h4 class="fw-semibold mb-0 text-body-emphasis">대표 {{board.ceo}}</h4>
+            {% comment %} <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p> {% endcomment %}
+          </div>
+    
+          <div class="col d-flex flex-column gap-2">
+            <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+              <svg class="bi" width="1em" height="1em">
+                <use xlink:href="#table"></use>
+              </svg>
+            </div>
+            <h4 class="fw-semibold mb-0 text-body-emphasis">평균 연봉 {{board.salary}}만원</h4>
+            {% comment %} <p class="text-body-secondary">Paragraph of text beneath the heading to explain the heading.</p> {% endcomment %}
+          </div>
+        </div>
+      </div>
+      
+    </div>
+      <div style="background-color:#F5F5F5; padding:20px; min-height:150px;">
+        {{ board.description }}
+      </div>
+      {% comment %} <div class="button">
+        <a href="{% url 'board:edit' board.id %}" class='btn btn-success'>
+          수정
+        </a>
+        <a href="{% url 'board:delete' board.id %}" class='btn btn-primary'>삭제</a>
+      </div> {% endcomment %}
+    </div>
+
+    <!-- 장단점 키워드 -->
+    {% load static %}
+      <link rel="stylesheet" type="text/css" href="{% static 'wcstyles.css' %}">
+      <h4>장단점 키워드</h4>
+      <div class="image-container">
+        <div class="image-group">
+          <img src="{% get_static_prefix %}wordcloud_img/wc_{{board.id}}_pros.png" alt="긍정 키워드">
+          <p class="image-text">장점</p>
+        </div>
+        <div class="image-group">
+          <img src="{% get_static_prefix %}wordcloud_img/wc_{{board.id}}_cons.png" alt="부정 키워드">
+          <p class="image-text">단점</p>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="{% url 'board:comment' board.id %}" class="btn btn-primary">댓글 작성하러 가기</a>
+      </div>
+
+    <!-- 댓글 불러오기 -->
+    <div class="my-4">
+      <ul class="list-group">
+        {% for comment in page.object_list %}
+          <li class="list-group-item">
+            <h5>{{ comment.title }}</h5>
+            <div>{{comment.job_category}} | {{comment.location}} | {{comment.status}}</div><br>
+            <div>장점: {{comment.content_pros}}</div><br>
+            <div>단점: {{comment.content_cons}}</div><br>
+            <div>바라는 점: {{comment.content_hope}}</div><br>
+            <div>총점: {{comment.star}}</div>
+            <div>승진 기회 및 가능성: {{comment.star_1}}</div>
+            <div>복지 및 급여: {{comment.star_2}}</div>
+            <div>업무와 삶의 균형: {{comment.star_3}}</div>
+            <div>사내문화: {{comment.star_4}}</div>
+            <div>경영진: {{comment.star_5}}</div>
+          </li>
+        {% endfor %}
+      </ul>
+      <!-- 댓글 Pagination -->
+      <div class="pagination">
+        <span class="step-links">
+            {% if page.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page.previous_page_number }}">previous</a>
+            {% endif %}
+            <span class="current">
+                Page {{ page.number }} of {{ page.paginator.num_pages }}.
+            </span>
+            {% if page.has_next %}
+                <a href="?page={{ page.next_page_number }}">next</a>
+                <a href="?page={{ page.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+        <!-- Page Navigator 추가 -->
+        <div class="mx-3">
+            <label for="page_num">Go to page:</label>
+            <input type="number" id="page_num" name="page_num" min="1" max="{{ page.paginator.num_pages }}">
+            <button onclick="goToPage()">Go</button>
+        </div>
+      </div>
+
+      <script>
+        function goToPage() {
+            // 페이지 번호 입력받기
+            var pageNum = document.getElementById("page_num").value;
+            
+            // 페이지 이동
+            window.location.href = "?page=" + pageNum;
+        }
+        </script>
+    
+    </div>
+  </div>
+</body>
+{% endblock %}

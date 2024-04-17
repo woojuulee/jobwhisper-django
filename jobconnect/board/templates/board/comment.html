@@ -1,0 +1,51 @@
+{% extends "./base.html" %}
+{% block main %}
+<div class="container" style = "padding-top:70px;">
+  <div class="contents">
+    <form method="post" action="{% url 'board:comment' board.id %}">
+      {% csrf_token %}
+      <label for="{{ form.job_category.id_for_label }}">직무</label>
+      {{ form.job_category }}
+      
+      <label for="{{ form.location.id_for_label }}">지역</label>
+      {{ form.location }}
+      
+      <label for="{{ form.status.id_for_label }}">현재 재직 여부</label>
+      {{ form.status }}
+      
+      <label for="{{ form.title.id_for_label }}">한줄 평 (최소 10글자)</label>
+      {{ form.title }}
+      
+      <label for="{{ form.content_pros.id_for_label }}">장점 (최소 30글자)</label>
+      {{ form.content_pros }}
+      
+      <label for="{{ form.content_cons.id_for_label }}">단점 (최소 30글자)</label>
+      {{ form.content_cons }}
+      
+      <label for="{{ form.content_hope.id_for_label }}">회사에 바라는 점 (최소 30글자)</label>
+      {{ form.content_hope }}
+      
+      <label for="{{ form.star.id_for_label }}">별점</label>
+      {{ form.star }}
+      
+      <label for="{{ form.star_1.id_for_label }}">승진 및 기회 가능성</label>
+      {{ form.star_1 }}
+      
+      <label for="{{ form.star_2.id_for_label }}">복지 및 급여</label>
+      {{ form.star_2 }}
+      
+      <label for="{{ form.star_3.id_for_label }}">업무와 삶의 균형</label>
+      {{ form.star_3 }}
+      
+      <label for="{{ form.star_4.id_for_label }}">사내문화</label>
+      {{ form.star_4 }}
+      
+      <label for="{{ form.star_5.id_for_label }}">경영진</label>
+      {{ form.star_5 }}
+      <a class="nav-link" aria-current="page" href="/stores/">Home</a>
+      <button type="submit" class="btn btn-primary" >작성 완료</button>
+
+    </form>
+  </div>
+</div>
+{% endblock %}
